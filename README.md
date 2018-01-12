@@ -1,21 +1,17 @@
-# movies
+# Show Chinese Movies Near You (Proof of Concept)
 
-generated using Luminus version "2.9.12.18"
+## Installation
 
-FIXME
-
-## Prerequisites
-
-You will need [Leiningen][1] 2.0 or above installed.
-
-[1]: https://github.com/technomancy/leiningen
+```
+brew install leiningen
+```
 
 ## Running
 
 To start a web server for the application, run:
 
-    lein run 
+  lein run
 
-## License
+## Notes
 
-Copyright © 2018 FIXME
+Generated using Luminus version "2.9.12.18"
