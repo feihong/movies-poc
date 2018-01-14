@@ -9,4 +9,5 @@
     :merge
     [(args)
      (source/from-system-props)
-     (source/from-env)]))
+     (source/from-env)
+     (source/from-file "secrets.edn")]))

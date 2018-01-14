@@ -2,7 +2,9 @@
   (:require [luminus-migrations.core :as migrations]
             [movies.config :refer [env]]
             [mount.core :as mount]
-            [movies.core :refer [start-app]]))
+            [movies.core :refer [start-app]]
+            [org.httpkit.client :as http]))
+
 
 (defn start []
   (mount/start-without #'movies.core/repl-server))
@@ -22,5 +24,3 @@
 
 (defn create-migration [name]
   (migrations/create name (select-keys env [:database-url])))
-
-
