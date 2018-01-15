@@ -2,7 +2,8 @@
   (:require [movies.layout :as layout]
             [compojure.core :refer [defroutes GET]]
             [ring.util.http-response :as response]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [movies.util :as util]))
 
 (defn home-page []
   (layout/render "home.html"))
@@ -14,7 +15,12 @@
 (defn about-page []
   (layout/render "about.html"))
 
+(defn playing-now []
+  (layout/render "playing-now.html"
+    {:movies (util/read-showtimes-from-file)}))
+
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/help" [] (help-page))
-  (GET "/about" [] (about-page)))
+  (GET "/about" [] (about-page))
+  (GET "/playing-now" [] (playing-now)))

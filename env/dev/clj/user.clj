@@ -1,10 +1,9 @@
 (ns user
   (:require [luminus-migrations.core :as migrations]
-            [cheshire.core]
             [movies.config :refer [env]]
             [mount.core :as mount]
             [movies.core :refer [start-app]]
-            [movies.external :as external]))
+            [movies.util :as util]))
 
 (defn start []
   (mount/start-without #'movies.core/repl-server))
@@ -24,8 +23,3 @@
 
 (defn create-migration [name]
   (migrations/create name (select-keys env [:database-url])))
-
-(defn write-showtimes-to-file []
-  (as-> (external/movie-showtimes) $
-    (cheshire.core/generate-string $ {:pretty true})
-    (spit "showtimes.json" $)))  
