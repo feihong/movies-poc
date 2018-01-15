@@ -18,11 +18,15 @@
   {% for movie in movies %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ movie.title }}</td>
       <td>
-        Directed by: {{ movie.directors|join:", " }}
+        <b>{{ movie.title }}</b>
         <br>
-        Cast: {{ movie.topCast|join:", " }}
+        {{ movie.releaseYear }}
+      </td>
+      <td>
+        <b>Directed by:</b> {{ movie.directors|join:", " }}
+        <br>
+        <b>Cast:</b> {{ movie.topCast|join:", " }}
       </td>
       <td>{{ movie.longDescription }}</td>
     </tr>

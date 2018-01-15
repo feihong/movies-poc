@@ -4,15 +4,15 @@
             [movies.external :as external]))
 
 
-(defn write-showtimes-to-file []
-  (as-> (external/movie-showtimes) $
+(defn write-showings-to-file []
+  (as-> (external/movie-showings) $
     (cheshire.core/generate-string $ {:pretty true})
-    (spit "showtimes.json" $)))
+    (spit "showings.json" $)))
 
 (defn ensure-top-cast [m]
   (update m "topCast" (fnil identity [])))
 
-(defn read-showtimes-from-file []
-  (->> (slurp "showtimes.json")
+(defn read-showings-from-file []
+  (->> (slurp "showings.json")
        (json/read-str)
        (map ensure-top-cast)))

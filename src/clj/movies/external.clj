@@ -10,7 +10,8 @@
 (def coordinates [41.891377 -87.618997])
 
 
-(defn movie-showtimes []
+(defn movie-showings []
+  ; Docs: http://developer.tmsapi.com/docs/read/data_v1_1/movies/Movies_playing_in_local_theatres
   (let [url "http://data.tmsapi.com/v1.1/movies/showings"
         date-str (-> (f/formatters :date)
                      (f/unparse (clj-time.core/now)))

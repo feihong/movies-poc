@@ -17,7 +17,7 @@
 
 (defn playing-now []
   (layout/render "playing-now.html"
-    {:movies (util/read-showtimes-from-file)}))
+    {:movies (util/read-showings-from-file)}))
 
 (defroutes home-routes
   (GET "/" [] (home-page))

@@ -15,4 +15,4 @@ profiles.clj
 /log
 
 # Generated files
-showtimes.json
+showings.json
