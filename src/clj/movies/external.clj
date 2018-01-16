@@ -11,7 +11,7 @@
 
 
 (defn movie-showings []
-  ; Docs: http://developer.tmsapi.com/docs/read/data_v1_1/movies/Movies_playing_in_local_theatres
+  ;; Docs: http://developer.tmsapi.com/docs/read/data_v1_1/movies/Movies_playing_in_local_theatres
   (let [url "http://data.tmsapi.com/v1.1/movies/showings"
         date-str (-> (f/formatters :date)
                      (f/unparse (clj-time.core/now)))
@@ -25,10 +25,12 @@
 
 
 (defn movie-meta [title year]
+  ;; Docs: http://www.omdbapi.com/
   (let [url "http://omdbapi.com/"
         qp {:t title
             :y year
             :type "movie"
+            :plot "full"
             :apikey (-> env :omdb :api-key)}]
     (-> @(http/get url {:query-params qp})
         :body
