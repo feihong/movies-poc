@@ -3,7 +3,8 @@
             [movies.config :refer [env]]
             [mount.core :as mount]
             [movies.core :refer [start-app]]
-            [movies.util :as util]))
+            [movies.util :as util]
+            [movies.external :refer [movie-showings movie-meta]]))
 
 (defn start []
   (mount/start-without #'movies.core/repl-server))

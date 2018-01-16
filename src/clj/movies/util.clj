@@ -4,10 +4,13 @@
             [movies.external :as external]))
 
 
-(defn write-showings-to-file []
-  (as-> (external/movie-showings) $
+(defn map->file [m path]
+  (as-> m $
     (cheshire.core/generate-string $ {:pretty true})
-    (spit "showings.json" $)))
+    (spit path $)))
+
+(defn write-showings-to-file []
+  (map->file (external/movie-showings) "showings.json"))
 
 (defn ensure-top-cast [m]
   (update m "topCast" (fnil identity [])))

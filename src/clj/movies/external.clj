@@ -22,3 +22,14 @@
     (-> @(http/get url {:query-params qp})
         :body
         json/read-str)))
+
+
+(defn movie-meta [title year]
+  (let [url "http://omdbapi.com/"
+        qp {:t title
+            :y year
+            :type "movie"
+            :apikey (-> env :omdb :api-key)}]
+    (-> @(http/get url {:query-params qp})
+        :body
+        json/read-str)))

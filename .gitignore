@@ -16,3 +16,4 @@ profiles.clj
 
 # Generated files
 showings.json
+movie-meta.json
