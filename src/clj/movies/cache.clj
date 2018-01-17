@@ -9,6 +9,7 @@
   (let [later (t/plus datetime (t/hours 6))]
     (t/after? later (t/now))))
 
+
 (defn fetch [url options]
   (let [result (get-cache {:url url})
         {:keys [content modified_at]} result]

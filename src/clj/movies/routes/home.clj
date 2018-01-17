@@ -3,7 +3,7 @@
             [compojure.core :refer [defroutes GET]]
             [ring.util.http-response :as response]
             [clojure.java.io :as io]
-            [movies.util :as util]))
+            [movies.external :as external]))
 
 (defn home-page []
   (layout/render "home.html"))
@@ -16,8 +16,7 @@
   (layout/render "about.html"))
 
 (defn playing-now []
-  (layout/render "playing-now.html"
-    {:movies (util/get-showings)}))
+  (layout/render "playing-now.html" {:movies (external/movie-showings)}))
 
 (defroutes home-routes
   (GET "/" [] (home-page))
