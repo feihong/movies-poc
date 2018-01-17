@@ -3,6 +3,7 @@
 ## Installation
 
 ```
+createdb movies_dev
 brew install leiningen
 lein run migrate
 ```

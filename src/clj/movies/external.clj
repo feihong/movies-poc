@@ -25,12 +25,18 @@
         json/read-str)))
 
 
+(defn get-theater-names [m]
+  (->> (m "showtimes")
+       (map #(get-in % ["theatre" "name"]))
+       set))
+
 (defn ensure-fields [m]
   "Ensure that topCast and directors fields are lists."
   (let [ensure-list (fnil identity [])]
     (-> m
         (update "topCast" ensure-list)
-        (update "directors" ensure-list))))
+        (update "directors" ensure-list)
+        (assoc :theaters (get-theater-names m)))))
 
 
 (defn movie-showings []
