@@ -1,6 +1,5 @@
 create table cache (
-  id integer auto_increment primary key,
-  url varchar(300) not null,
+  url varchar(300) primary key,
   content clob not null,
   modified_at timestamp not null default current_timestamp
 );

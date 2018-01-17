@@ -1,21 +1,27 @@
--- :name create-user! :! :n
--- :doc creates a new user record
-INSERT INTO users
-(id, first_name, last_name, email, pass)
-VALUES (:id, :first_name, :last_name, :email, :pass)
+-- :name update-cache! :! :n
+-- :doc Update the cache
+MERGE INTO cache
+(url, content, modified_at) KEY (url)
+VALUES (:url, :content, :modified_at)
 
--- :name update-user! :! :n
--- :doc updates an existing user record
-UPDATE users
-SET first_name = :first_name, last_name = :last_name, email = :email
-WHERE id = :id
+-- :name get-cache :? :1
+-- :doc Retrieves content from cache
+SELECT content, modified_at FROM cache
+WHERE url = :url
 
--- :name get-user :? :1
--- :doc retrieves a user record given the id
-SELECT * FROM users
-WHERE id = :id
+-- :name get-movies :? :n
+-- :doc Retrieves all movies
+SELECT *
+FROM movies
 
--- :name delete-user! :! :n
--- :doc deletes a user record given the id
-DELETE FROM users
-WHERE id = :id
+-- :name get-movie :? :1
+-- :doc Retrieves a movie
+SELECT *
+FROM movies
+WHERE title = :title AND year = :year
+
+-- :name create-movie! :! :n
+-- :doc Creates a new movie record
+INSERT INTO movies
+(title, year, directed_by, cast, country, lang, summary)
+VALUES (:title, :year, :directed_by, :cast, :country, :lang, :summary)

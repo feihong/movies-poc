@@ -4,7 +4,8 @@
             [mount.core :as mount]
             [movies.core :refer [start-app]]
             [movies.util :as util]
-            [movies.external :refer [movie-showings movie-meta]]))
+            [movies.external :refer [movie-showings movie-meta]]
+            [movies.db.core :refer :all]))
 
 (defn start []
   (mount/start-without #'movies.core/repl-server))
