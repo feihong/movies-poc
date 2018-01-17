@@ -1,8 +1,12 @@
 -- :name update-cache! :! :n
 -- :doc Update the cache
-MERGE INTO cache
-(url, content, modified_at) KEY (url)
+INSERT INTO cache
+(url, content, modified_at)
 VALUES (:url, :content, :modified_at)
+ON CONFLICT (url)
+DO UPDATE SET
+  content = EXCLUDED.content,
+  modified_at = EXCLUDED.modified_at
 
 -- :name get-cache :? :1
 -- :doc Retrieves content from cache

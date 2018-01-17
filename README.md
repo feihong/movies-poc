@@ -9,11 +9,11 @@ lein run migrate
 
 ## Running
 
-To start a web server for the application, run:
+Start web server
 
   lein run
 
-To connect REPL to application, run:
+Connect REPL to running app
 
   lein repl :connect 7000
 

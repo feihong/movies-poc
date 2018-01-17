@@ -4,7 +4,7 @@
   :url "http://example.com/FIXME"
 
   :dependencies [[clj-time "0.14.2"]
-                 [com.h2database/h2 "1.4.196"]
+                 [org.postgresql/postgresql "42.1.4"]
                  [compojure "1.6.0"]
                  [conman "0.7.5"]
                  [cprop "0.1.11"]

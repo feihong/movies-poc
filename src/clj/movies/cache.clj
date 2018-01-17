@@ -14,10 +14,9 @@
   (let [result (get-cache {:url url})
         {:keys [content modified_at]} result]
     (if (and result (is-fresh modified_at))
-      ; Database returns org.h2.jdbc.JdbcClob for content
-      (-> content .getCharacterStream slurp)
+      content
       (let [fresh-content (-> @(http/get url options) :body)]
         (update-cache! {:url url
                         :content fresh-content
-                        :modified_at (java.util.Date.)})
+                        :modified_at (t/now)})
         fresh-content))))
