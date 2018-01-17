@@ -22,4 +22,5 @@
 (defn read-showings-from-file []
   (->> (slurp "showings.json")
        (json/read-str)
+       (filter #(% "releaseYear"))
        (map ensure-fields)))
