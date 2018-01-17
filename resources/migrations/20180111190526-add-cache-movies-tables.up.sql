@@ -1,6 +1,6 @@
 create table cache (
   url varchar(300) primary key,
-  content clob not null,
+  content text not null,
   modified_at timestamp not null default current_timestamp
 );
 
@@ -12,7 +12,7 @@ create table movies (
   cast varchar(300),
   country varchar(30),
   lang varchar(30),
-  summary clob,
+  summary text,
   alt_title varchar(200),
   rating tinyint,
   trailer_link varchar(300),
