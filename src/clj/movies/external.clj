@@ -1,5 +1,6 @@
 (ns movies.external
   (:require [movies.config :refer [env]]
+            [movies.cache :as cache]
             [org.httpkit.client :as http]
             [clj-time.core]
             [clj-time.format :as f]
@@ -19,8 +20,7 @@
             :api_key (-> env :gracenote :api-key)
             :lat (first coordinates)
             :lng (second coordinates)}]
-    (-> @(http/get url {:query-params qp})
-        :body
+    (-> (cache/fetch url {:query-params qp})
         json/read-str)))
 
 

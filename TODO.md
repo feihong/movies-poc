@@ -1,0 +1,2 @@
+- Get movie meta from movies table when present
+- Add clob->str function

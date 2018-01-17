@@ -24,3 +24,8 @@
        (json/read-str)
        (filter #(% "releaseYear"))
        (map ensure-fields)))
+
+(defn get-showings []
+  (->> (external/movie-showings)
+       (filter #(% "releaseYear"))
+       (map ensure-fields)))
