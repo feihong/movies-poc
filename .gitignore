@@ -14,6 +14,8 @@ profiles.clj
 .nrepl-port
 /log
 
+*.db
+
 # Generated files
 showings.json
 movie-meta.json

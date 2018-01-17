@@ -4,6 +4,7 @@
 
 ```
 brew install leiningen
+lein run migrate
 ```
 
 ## Running
