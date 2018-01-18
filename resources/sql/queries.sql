@@ -1,17 +1,18 @@
 -- :name update-cache! :! :n
 -- :doc Update the cache
 INSERT INTO cache
-(url, content, modified_at)
-VALUES (:url, :content, :modified_at)
-ON CONFLICT (url)
+(key, content, expires_at)
+VALUES (:key, :content, current_timestamp + interval '6 hours')
+ON CONFLICT (key)
 DO UPDATE SET
   content = EXCLUDED.content,
-  modified_at = EXCLUDED.modified_at
+  expires_at = current_timestamp + interval '6 hours'
 
 -- :name get-cache :? :1
 -- :doc Retrieves content from cache
-SELECT content, modified_at FROM cache
-WHERE url = :url
+SELECT content FROM cache
+WHERE key = :key AND
+      expires_at > current_timestamp
 
 -- :name get-movies :? :n
 -- :doc Retrieves all movies

@@ -1,7 +1,7 @@
 create table cache (
-  url varchar(300) primary key,
+  key varchar(300) primary key,
   content text not null,
-  modified_at timestamp not null default current_timestamp
+  expires_at timestamp not null
 );
 
 create table movies (
