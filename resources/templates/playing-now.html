@@ -11,8 +11,7 @@
       <th>#</th>
       <th>Title</th>
       <th>About</th>
-      <th>Description</th>
-      <th>Playing at</th>
+      <th>Summary</th>
     </tr>
   </thead>
   <tbody>
@@ -29,8 +28,12 @@
         <br>
         <b>Cast:</b> {{ movie.topCast|join:", " }}
       </td>
-      <td>{{ movie.longDescription }}</td>
-      <td>{{ movie.theaters|join:", " }}</td>
+      <td>
+        {{ movie.longDescription }}
+        <br><br>
+        <b>Playing at:</b>
+        {{ movie.theaters|join:", " }}
+      </td>
     </tr>
   {% endfor %}
   </tbody>

@@ -28,7 +28,8 @@
 (defn get-theater-names [m]
   (->> (m "showtimes")
        (map #(get-in % ["theatre" "name"]))
-       set))
+       set
+       sort))
 
 (defn ensure-fields [m]
   "Ensure that topCast and directors fields are lists."
