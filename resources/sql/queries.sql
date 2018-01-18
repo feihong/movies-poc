@@ -27,5 +27,5 @@ WHERE title = :title AND year = :year
 -- :name create-movie! :! :n
 -- :doc Creates a new movie record
 INSERT INTO movies
-(title, year, directed_by, cast, country, lang, summary)
-VALUES (:title, :year, :directed_by, :cast, :country, :lang, :summary)
+(title, year, director, actors, country, language, plot, poster)
+VALUES (:title, :year, :director, :actors, :country, :language, :plot, :poster)

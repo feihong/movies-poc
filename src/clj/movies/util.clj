@@ -1,7 +1,7 @@
 (ns movies.util
   (:require [clojure.data.json :as json]
             [cheshire.core]
-            [movies.external :as external]))
+            [movies.external.core :as external]))
 
 
 (defn map->file [m path]
