@@ -19,7 +19,11 @@
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>
-        <b>{{ movie.title }}</b>
+        {% if movie.url %}
+          <a href="{{ movie.url }}" target="_blank">{{ movie.title }}</a>
+        {% else %}
+          {{ movie.title }}
+        {% endif %}
         <br>
         <img src="{{ movie.poster }}">
       </td>

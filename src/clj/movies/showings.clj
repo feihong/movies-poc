@@ -17,14 +17,15 @@
    :director (some->> m :directors (str/join ", "))
    :actors (some->> m :topCast (str/join ", "))
    :plot (:longDescription m)
+   :url (:officialUrl m)
    :theaters (get-theater-names m)})
 
 (defn get-additional-meta [m]
   (let [m2 (omdb/fetch-movie (:title m) (:year m))
+        ; Take the plot that is longest
         plot1 (:plot m)
         plot2 (:plot m2)
         plot (if (> (count plot1) (count plot2)) plot1 plot2)]
-    ; (println m2)
     (-> (merge m m2)
         (assoc :plot plot))))
 

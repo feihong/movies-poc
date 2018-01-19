@@ -10,6 +10,7 @@
            java.sql.Array
            clojure.lang.IPersistentMap
            clojure.lang.IPersistentVector
+           clojure.lang.LazySeq
            [java.sql
             BatchUpdateException
             PreparedStatement]))
@@ -53,4 +54,6 @@
   IPersistentMap
   (sql-value [value] (to-pg-json value))
   IPersistentVector
+  (sql-value [value] (to-pg-json value))
+  LazySeq
   (sql-value [value] (to-pg-json value)))

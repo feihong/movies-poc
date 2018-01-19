@@ -1,6 +1,6 @@
 (ns movies.cache
-  (:require [cheshire.core :as json]
-            [clj-time.core :as t]
+  (:require [clj-time.core :as t]
+            [cheshire.core :as json]
             [org.httpkit.client :as http]
             [movies.db.core :as db]))
 
@@ -11,7 +11,7 @@
   (-> @(http/get url options)
       :body
       (json/parse-string true)))
-
+      
 (defn get-cache [key]
   (let [key-str (if (string? key) key (str key))]
     (db/get-cache {:key key-str})))
