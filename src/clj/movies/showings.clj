@@ -1,4 +1,4 @@
-(ns movies.external.core
+(ns movies.showings
   (:require [org.httpkit.client :as http]
             [clj-time.core]
             [clj-time.format :as f]
@@ -6,30 +6,6 @@
             [movies.config :refer [env]]
             [movies.cache :as cache]
             [movies.db.core :as db]))
-
-
-; (defn fetch-movie-meta [title year]
-;   "Fetch movie metadata from OMDB API.
-;
-;   Docs: http://www.omdbapi.com/
-;   "
-;   (let [url "http://omdbapi.com/"
-;         qp {:t title
-;             :y year
-;             :type "movie"
-;             :plot "full"
-;             :apikey (-> env :omdb :api-key)}]
-;     (-> @(http/get url {:query-params qp})
-;         :body
-;         json/read-str)))
-;
-;
-; (defn movie-meta [title year]
-;   (let [movie (db/get-movie {:title title :year year})]
-;     (if movie
-;       movie
-;       (let [result (fetch-movie-meta title year)
-;             new-movie {}]))))
 
 
 ; Coordinates of AMC River East 21.
@@ -46,13 +22,12 @@
             :api_key (-> env :gracenote :api-key)
             :lat (first coordinates)
             :lng (second coordinates)}]
-    (-> (cache/fetch url {:query-params qp})
-        json/read-str)))
+    (cache/fetch-json "gracenote.showings" url {:query-params qp})))
 
 
 (defn get-theater-names [m]
-  (->> (m "showtimes")
-       (map #(get-in % ["theatre" "name"]))
+  (->> (m :showtimes)
+       (map #(-> % :theatre :name))
        set
        sort))
 
@@ -60,13 +35,12 @@
   "Ensure that topCast and directors fields are lists."
   (let [ensure-list (fnil identity [])]
     (-> m
-        (update "topCast" ensure-list)
-        (update "directors" ensure-list)
+        (update :topCast ensure-list)
+        (update :directors ensure-list)
         (assoc :theaters (get-theater-names m)))))
-
 
 (defn movie-showings []
   (->> (fetch-movie-showings)
-       (filter #(% "releaseYear"))
-       (sort-by #(% "releaseDate") #(compare %2 %1))
+       (filter #(% :releaseYear))
+       (sort-by #(% :releaseDate) #(compare %2 %1))
        (map ensure-fields)))

@@ -5,7 +5,6 @@
             [mount.core :as mount]
             [movies.core :refer [start-app]]
             [movies.util :as util]
-            [movies.external.core :as external]
             [movies.external.omdb :as omdb]
             [movies.db.core :refer :all]))
 

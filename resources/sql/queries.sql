@@ -2,11 +2,11 @@
 -- :doc Update the cache
 INSERT INTO cache
 (key, content, expires_at)
-VALUES (:key, :content, current_timestamp + interval '6 hours')
+VALUES (:key, :content, :expires_at)
 ON CONFLICT (key)
 DO UPDATE SET
   content = EXCLUDED.content,
-  expires_at = current_timestamp + interval '6 hours'
+  expires_at = EXCLUDED.expires_at
 
 -- :name get-cache :? :1
 -- :doc Retrieves content from cache
