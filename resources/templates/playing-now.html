@@ -21,15 +21,15 @@
       <td>
         <b>{{ movie.title }}</b>
         <br>
-        {{ movie.releaseYear }}
+        {{ movie.year }}
       </td>
       <td>
-        <b>Directed by:</b> {{ movie.directors|join:", " }}
+        <b>Directed by:</b> {{ movie.director }}
         <br>
-        <b>Cast:</b> {{ movie.topCast|join:", " }}
+        <b>Cast:</b> {{ movie.actors }}
       </td>
       <td>
-        {{ movie.longDescription }}
+        {{ movie.plot }}
         <br><br>
         <b>Playing at:</b>
         {{ movie.theaters|join:", " }}
