@@ -12,6 +12,10 @@
       :body
       (json/parse-string true)))
 
+(defn get-cache [key]
+  (let [key-str (if (string? key) key (str key))]
+    (db/get-cache {:key key-str})))
+
 (defn update-cache [key content duration]
   (let [expires_at (t/plus (t/now) duration)
         key-str (if (string? key) key (str key))]
@@ -19,13 +23,12 @@
                        :content content
                        :expires_at expires_at})))
 
-(defn fetch-json [key url options & {:keys [duration transform]
-                                     :or {duration (t/hours 6)
-                                          transform identity}}]
+(defn fetch-json [key url options & {:keys [duration]
+                                     :or {duration (t/hours 6)}}]
   (if *use-cache*
-    (if-let [result (db/get-cache {:key key})]
+    (if-let [result (get-cache key)]
       (:content result)
-      (let [content (-> (request->json url options) transform)]
+      (let [content (request->json url options)]
         (update-cache key content duration)
         content))
     (request->json url options)))

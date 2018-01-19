@@ -1,2 +1,2 @@
 drop table cache;
-drop table movies;
+-- drop table movies;

@@ -1,12 +1,13 @@
 (ns user
   (:require [luminus-migrations.core :as migrations]
             [clj-time.core :as t]
-            [movies.config :refer [env]]
             [mount.core :as mount]
+            [movies.config :refer [env]]
             [movies.core :refer [start-app]]
             [movies.util :as util]
             [movies.external.omdb :as omdb]
-            [movies.db.core :refer :all]))
+            [movies.db.core :refer :all]
+            [movies.cache :as cache]))
 
 (defn start []
   (mount/start-without #'movies.core/repl-server))

@@ -1,3 +1,1 @@
-- Convert gracenote movie map into standard map
-- Drop movies table
 - Have movie meta come from cache instead (cache for 3 months)

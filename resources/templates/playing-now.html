@@ -21,7 +21,9 @@
       <td>
         <b>{{ movie.title }}</b>
         <br>
-        {{ movie.year }}
+        <img src="{{ movie.poster }}">
+        <br>
+        {{ movie.year }} / {{ movie.country }} / {{ movie.language }}
       </td>
       <td>
         <b>Directed by:</b> {{ movie.director }}
