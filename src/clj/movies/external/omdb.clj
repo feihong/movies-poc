@@ -29,8 +29,10 @@
        (apply list)))
 
 (defn omdb->std [src]
-  (as-> key-mapping-pairs $
-        (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {} $)))
+  (if (:Error src)
+    {}
+    (as-> key-mapping-pairs $
+          (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {} $))))
         ; (update $ :year #(Integer/parseInt %))))
 
 (defn fetch-movie [title year]

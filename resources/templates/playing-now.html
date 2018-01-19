@@ -22,8 +22,6 @@
         <b>{{ movie.title }}</b>
         <br>
         <img src="{{ movie.poster }}">
-        <br>
-        {{ movie.year }} / {{ movie.country }} / {{ movie.language }}
       </td>
       <td>
         <b>Directed by:</b> {{ movie.director }}
@@ -31,6 +29,8 @@
         <b>Cast:</b> {{ movie.actors }}
       </td>
       <td>
+        {{ movie.year }} / {{ movie.country }} / {{ movie.language }}
+        <br><br>
         {{ movie.plot }}
         <br><br>
         <b>Playing at:</b>
