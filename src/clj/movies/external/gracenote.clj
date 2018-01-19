@@ -1,6 +1,7 @@
 (ns movies.external.gracenote
-  (:require [org.httpkit.client :as http]
-            [clj-time.core]
+  (:require [clojure.string :as str]
+            [org.httpkit.client :as http]
+            [clj-time.core :as t]
             [clj-time.format :as f]
             [clojure.data.json :as json]
             [movies.config :refer [env]]
@@ -13,7 +14,7 @@
 
 (defn today-str []
   (let [fmt (f/formatters :date)
-        now (clj-time.core/now)]
+        now (t/now)]
     (f/unparse fmt now)))
 
 (defn fetch-movie-showings []
@@ -24,4 +25,6 @@
             :api_key (-> env :gracenote :api-key)
             :lat (first coordinates)
             :lng (second coordinates)}]
-     (cache/fetch-json "gracenote-showings" api-url {:query-params qp})))
+     (cache/fetch-json "gracenote.showings"
+                       api-url
+                       {:query-params qp})))

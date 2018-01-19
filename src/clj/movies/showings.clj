@@ -1,28 +1,6 @@
 (ns movies.showings
-  (:require [org.httpkit.client :as http]
-            [clj-time.core]
-            [clj-time.format :as f]
-            [clojure.data.json :as json]
-            [movies.config :refer [env]]
-            [movies.cache :as cache]
-            [movies.db.core :as db]))
-
-
-; Coordinates of AMC River East 21.
-(def coordinates [41.891377 -87.618997])
-
-(defn fetch-movie-showings []
-  "Fetch movie showings from Gracenote API
-  Docs: http://developer.tmsapi.com/docs/read/data_v1_1/movies/Movies_playing_in_local_theatres
-  "
-  (let [url "http://data.tmsapi.com/v1.1/movies/showings"
-        date-str (-> (f/formatters :date)
-                     (f/unparse (clj-time.core/now)))
-        qp {:startDate date-str
-            :api_key (-> env :gracenote :api-key)
-            :lat (first coordinates)
-            :lng (second coordinates)}]
-    (cache/fetch-json "gracenote.showings" url {:query-params qp})))
+  (:require [movies.config :refer [env]]
+            [movies.external.gracenote :as gracenote]))
 
 
 (defn get-theater-names [m]
@@ -39,8 +17,16 @@
         (update :directors ensure-list)
         (assoc :theaters (get-theater-names m)))))
 
+(defn gracenote->std [m]
+  {:title (:title m)
+   :director (->> m :directors (str/join ", "))
+   :actors (->> m :topCast (str/join ", "))
+   :plot (:longDescription m)
+   :year (:releaseYear m)
+   :theaters (get-theater-names m)})
+
 (defn movie-showings []
-  (->> (fetch-movie-showings)
+  (->> (gracenote/fetch-movie-showings)
        (filter #(% :releaseYear))
        (sort-by #(% :releaseDate) #(compare %2 %1))
        (map ensure-fields)))
