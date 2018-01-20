@@ -12,11 +12,11 @@ lein run migrate
 
 Start web server
 
-  lein run
+    lein run
 
 Connect REPL to running app
 
-  lein repl :connect 7000
+    lein repl :connect 7000
 
 ## Notes
 

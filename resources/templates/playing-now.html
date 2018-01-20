@@ -33,7 +33,8 @@
         <b>Cast:</b> {{ movie.actors }}
       </td>
       <td>
-        {{ movie.year }} / {{ movie.country }} / {{ movie.language }}
+        {{ movie.year }} / {{ movie.country|default:"?" }} /
+        {{ movie.language|default:"?" }}
         <br><br>
         {{ movie.plot }}
         <br><br>
