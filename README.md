@@ -21,3 +21,7 @@ Connect REPL to running app
 ## Notes
 
 Generated using Luminus version "2.9.12.18"
+
+## References
+
+- [Atom Clojure Setup](https://gist.github.com/jasongilman/d1f70507bed021b48625)

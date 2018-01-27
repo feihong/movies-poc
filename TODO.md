@@ -1,1 +1,1 @@
-- Why does the merge not work for some movies?
+- Add wikipedia support to fetch metadata for movies that are not in OMDB
