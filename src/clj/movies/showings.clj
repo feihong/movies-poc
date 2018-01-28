@@ -2,7 +2,8 @@
   (:require [clojure.string :as str]
             [movies.config :refer [env]]
             [movies.external.gracenote :as gracenote]
-            [movies.external.omdb :as omdb]))
+            [movies.external.omdb :as omdb]
+            [movies.criteria :as criteria]))
 
 
 (defn get-theater-names [m]
@@ -31,7 +32,9 @@
 
 (defn movie-showings []
   (->> (gracenote/fetch-movie-showings)
-       (filter #(% :releaseYear))
-       (sort-by #(% :releaseDate) #(compare %2 %1))
+       (filter :releaseYear)
        (map gracenote->std)
-       (map get-additional-meta)))
+       (map get-additional-meta)
+       criteria/assign-scores
+       ; Sort by score descending and title ascending
+       (sort-by (fn [x] [(-> x :criteria-score -), (:title x)]))))

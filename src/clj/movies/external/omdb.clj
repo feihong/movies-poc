@@ -31,9 +31,9 @@
 (defn omdb->std [src]
   (if (:Error src)
     {}
-    (as-> key-mapping-pairs $
-          (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {} $))))
-        ; (update $ :year #(Integer/parseInt %))))
+    (->> key-mapping-pairs
+         ; Copy :Title value to :title, :Year value to :year, etc
+         (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {}))))
 
 (defn fetch-movie [title year]
   "Fetch movie metadata, converted to standard format"
