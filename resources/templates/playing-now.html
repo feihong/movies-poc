@@ -8,16 +8,19 @@
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
-      <th>#</th>
+      <th><input type="checkbox"></th>
       <th>Title</th>
       <th>About</th>
       <th>Summary</th>
     </tr>
   </thead>
   <tbody>
+  <div>
+    <button class="btn btn-primary">Archive</button>
+  </div>
   {% for movie in movies %}
     <tr>
-      <td>{{ forloop.counter }}</td>
+      <td><input type="checkbox"></td>
       <td>
         {% if movie.url %}
           <a href="{{ movie.url }}" target="_blank">{{ movie.title }}</a>
@@ -39,7 +42,10 @@
         {{ movie.plot }}
         <br><br>
         <b>Playing at:</b>
-        {{ movie.theaters|join:", " }}
+        {% for theater, showtimes in movie.showtimes %}
+          <a href="#">{{ theater }}</a>
+          {% if not forloop.last %} | {% endif %}
+        {% endfor %}
       </td>
     </tr>
   {% endfor %}

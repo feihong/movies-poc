@@ -14,7 +14,7 @@ profiles.clj
 .nrepl-port
 /log
 
-*.db
+.nightlight.edn
 
 # Generated files
 showings.json

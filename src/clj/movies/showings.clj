@@ -1,5 +1,6 @@
 (ns movies.showings
   (:require [clojure.string :as str]
+            [clj-time.format :as f]
             [movies.config :refer [env]]
             [movies.external.gracenote :as gracenote]
             [movies.external.omdb :as omdb]
@@ -12,6 +13,18 @@
        set
        sort))
 
+(defn get-datetimes [showtimes]
+  (->> showtimes
+       (map #(->> %
+                  :dateTime
+                  (f/parse (f/formatters :date-hour-minute))))))
+
+(defn get-showtimes [m]
+  "Get showtimes grouped by theater name"
+  (->> (m :showtimes)
+       (group-by #(-> % :theatre :name))
+       (map (fn [[k v]] [k (get-datetimes v)]))))
+
 (defn gracenote->std [m]
   {:title (:title m)
    :year (:releaseYear m)
@@ -19,7 +32,8 @@
    :actors (some->> m :topCast (str/join ", "))
    :plot (:longDescription m)
    :url (:officialUrl m)
-   :theaters (get-theater-names m)})
+   ; :theaters (get-theater-names m)
+   :showtimes (get-showtimes m)})
 
 (defn get-additional-meta [m]
   (let [m2 (omdb/fetch-movie (:title m) (:year m))
