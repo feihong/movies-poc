@@ -24,9 +24,7 @@
 (defn get-additional-meta [m]
   (let [m2 (omdb/fetch-movie (:title m) (:year m))
         ; Take the plot that is longest
-        plot1 (:plot m)
-        plot2 (:plot m2)
-        plot (if (> (count plot1) (count plot2)) plot1 plot2)]
+        plot (max-key count (:plot m) (:plot m2))]
     (-> (merge m m2)
         (assoc :plot plot))))
 
