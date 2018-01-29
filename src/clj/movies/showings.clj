@@ -4,16 +4,12 @@
             [movies.config :refer [env]]
             [movies.external.gracenote :as gracenote]
             [movies.external.omdb :as omdb]
-            [movies.criteria :as criteria]))
+            [movies.criteria :as criteria]
+            [movies.cache :as cache]))
 
-
-(defn get-theater-names [m]
-  (->> (m :showtimes)
-       (map #(-> % :theatre :name))
-       set
-       sort))
 
 (defn get-datetimes [showtimes]
+  "Convert showtimes from maps to datetime objects"
   (->> showtimes
        (map #(->> %
                   :dateTime
@@ -32,7 +28,6 @@
    :actors (some->> m :topCast (str/join ", "))
    :plot (:longDescription m)
    :url (:officialUrl m)
-   ; :theaters (get-theater-names m)
    :showtimes (get-showtimes m)})
 
 (defn get-additional-meta [m]
@@ -43,7 +38,8 @@
         (assoc :plot plot))))
 
 (defn movie-showings []
-  (->> (gracenote/fetch-movie-showings)
+  ; (->> (cache/without-caching (gracenote/fetch-movie-showings 5)))
+  (->> (gracenote/fetch-movie-showings 4)
        (filter :releaseYear)
        (map gracenote->std)
        (map get-additional-meta)

@@ -43,8 +43,14 @@
         <br><br>
         <b>Playing at:</b>
         {% for theater, showtimes in movie.showtimes %}
-          <a href="#">{{ theater }}</a>
-          {% if not forloop.last %} | {% endif %}
+          <p>
+            <a href="#">{{ theater }}</a>
+            <ul>
+            {% for showtime in showtimes %}
+              <li>{{ showtime|date:shortDateTime }}</li>
+            {% endfor %}
+            </ul>
+          </p>
         {% endfor %}
       </td>
     </tr>
