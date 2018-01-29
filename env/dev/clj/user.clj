@@ -8,6 +8,7 @@
             [movies.core :refer [start-app]]
             [movies.util :as util]
             [movies.external.omdb :as omdb]
+            [movies.external.gracenote :as gracenote]
             [movies.db.core :refer :all]
             [movies.cache :as cache]))
 
@@ -31,7 +32,6 @@
   (migrations/create name (select-keys env [:database-url])))
 
 ;;=============================================================================
-(require '[movies.external.gracenote :as gracenote])
 
-(cache/without-caching
-  (gracenote/fetch-movie-showings 3))
+; (cache/without-caching
+;   (gracenote/fetch-movie-showings 3))
