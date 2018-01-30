@@ -1,8 +1,10 @@
 create table cache (
-  key varchar(300) primary key,
+  id serial primary key,
+  key varchar(300),
   content jsonb not null,
   created_at timestamp not null default current_timestamp,
-  expires_at timestamp not null
+  expires_at timestamp not null,
+  constraint uniq_key unique(key)
 );
 
 create table movies (

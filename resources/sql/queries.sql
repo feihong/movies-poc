@@ -16,7 +16,7 @@ WHERE key = :key AND
 
 -- :name list-cache :? :*
 -- :doc Retrieves cache items
-SELECT key, created_at, expires_at
+SELECT id, key, created_at, expires_at
 FROM cache
 ORDER BY created_at DESC
 
