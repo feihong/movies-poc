@@ -10,8 +10,11 @@
 (defn request->json [url options]
   (-> @(http/get url options)
       :body
-      (json/parse-string true)))
-      
+      (json/decode true)))
+
+(defn list-cache []
+  (db/list-cache))
+
 (defn get-cache [key]
   (let [key-str (if (string? key) key (str key))]
     (db/get-cache {:key key-str})))

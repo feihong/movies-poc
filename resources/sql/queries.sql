@@ -14,6 +14,12 @@ SELECT content FROM cache
 WHERE key = :key AND
       expires_at > current_timestamp
 
+-- :name list-cache :? :*
+-- :doc Retrieves cache items
+SELECT key, created_at, expires_at
+FROM cache
+ORDER BY created_at DESC
+
 -- :name get-movies :? :n
 -- :doc Retrieves all movies
 SELECT *
@@ -28,5 +34,6 @@ WHERE title = :title AND year = :year
 -- :name create-movie! :! :n
 -- :doc Creates a new movie record
 INSERT INTO movies
-(title, year, director, actors, country, language, plot, poster)
-VALUES (:title, :year, :director, :actors, :country, :language, :plot, :poster)
+(title, year, director, actors, country, language, plot, poster, url)
+VALUES (:title, :year, :director, :actors, :country, :language, :plot, :poster,
+        :url)

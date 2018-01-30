@@ -1,6 +1,7 @@
 create table cache (
   key varchar(300) primary key,
   content jsonb not null,
+  created_at timestamp not null default current_timestamp,
   expires_at timestamp not null
 );
 
@@ -14,6 +15,7 @@ create table movies (
   language varchar(30),
   plot text,
   poster varchar(300),
+  url varchar(300),
   created_at timestamp not null default current_timestamp,
   constraint uniq_title_year unique(title, year)
 );
