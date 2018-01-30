@@ -3,6 +3,7 @@
             [compojure.core :refer [defroutes GET]]
             [ring.util.http-response :as response]
             [clojure.java.io :as io]
+            [clojure.pprint :as pprint]
             [movies.showings :refer [movie-showings]]
             [movies.cache :as cache]))
 
@@ -23,8 +24,10 @@
   (layout/render "cache-list.html" {:items (cache/list-cache)}))
 
 (defn cache-page [id]
-  (let [int-id (Integer/parseInt id)]
-    (layout/render "cache.html" {:item (cache/get-cache-by-id int-id)})))
+  (let [int-id (Integer/parseInt id)
+        item (cache/get-cache-by-id int-id)
+        content-str (with-out-str (-> item :content pprint/pprint))]
+    (layout/render "cache.html" {:item item :content content-str})))
 
 (defroutes home-routes
   (GET "/" [] (home-page))
