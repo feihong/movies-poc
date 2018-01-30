@@ -19,12 +19,17 @@
 (defn playing-now-page []
   (layout/render "playing-now.html" {:movies (movie-showings)}))
 
-(defn cache-page []
-  (layout/render "cache.html" {:items (cache/list-cache)}))
+(defn cache-list-page []
+  (layout/render "cache-list.html" {:items (cache/list-cache)}))
+
+(defn cache-page [id]
+  (let [int-id (Integer/parseInt id)]
+    (layout/render "cache.html" {:item (cache/get-cache-by-id int-id)})))
 
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/help" [] (help-page))
   (GET "/about" [] (about-page))
   (GET "/playing-now" [] (playing-now-page))
-  (GET "/cache" [] (cache-page)))
+  (GET "/cache" [] (cache-list-page))
+  (GET "/cache/:id" [id] (cache-page id)))

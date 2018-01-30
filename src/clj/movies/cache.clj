@@ -15,6 +15,9 @@
 (defn list-cache []
   (db/list-cache))
 
+(defn get-cache-by-id [id]
+  (db/get-cache-by-id {:id id}))
+
 (defn get-cache [key]
   (let [key-str (if (string? key) key (str key))]
     (db/get-cache {:key key-str})))

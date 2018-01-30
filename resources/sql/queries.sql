@@ -14,6 +14,11 @@ SELECT content FROM cache
 WHERE key = :key AND
       expires_at > current_timestamp
 
+-- :name get-cache-by-id :? :1
+-- :doc Retrieves content from cache
+SELECT id, key, content, created_at, expires_at FROM cache
+WHERE id = :id
+
 -- :name list-cache :? :*
 -- :doc Retrieves cache items
 SELECT id, key, created_at, expires_at

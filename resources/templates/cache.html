@@ -1,34 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Cache</h1>
-
-<p>Showing {{ cache|count }} cache items</p>
+<h1>Cache Item {{ item.id }}</h1>
 
 <table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Key</th>
-      <th>Created</th>
-      <th>Expires</th>
-    </tr>
-  </thead>
   <tbody>
-  {% for item in items %}
     <tr>
-      <td>{{ forloop.counter }}</td>
-      <td>
-        {{ item.key }}
-      </td>
+      <td>Key</td>
+      <td>{{ item.key }}</td>
+    </tr>
+    <tr>
+      <td>Created</td>
       <td>
         {{ item.created_at|date:shortDateTime }}
       </td>
+    </tr>
+    <tr>
+      <td>Expires</td>
       <td>
         {{ item.expires_at|date:shortDateTime }}
       </td>
     </tr>
-  {% endfor %}
+    <tr>
+      <td>Content</td>
+      <td>
+        {{ item.content }}
+      </td>
+    </tr>
   </tbody>
 </table>
 {% endblock %}
