@@ -38,8 +38,8 @@
         (assoc :plot plot))))
 
 (defn movie-showings []
-  ; (->> (cache/without-caching (gracenote/fetch-movie-showings 5)))
-  (->> (gracenote/fetch-movie-showings 4)
+  ; (->> (cache/without-caching (gracenote/fetch-movie-showings 3))
+  (->> (gracenote/fetch-movie-showings 3)
        (filter :releaseYear)
        (map gracenote->std)
        (map get-additional-meta)

@@ -28,7 +28,9 @@
           {{ movie.title }}
         {% endif %}
         <br>
-        <img src="{{ movie.poster }}">
+        {% if movie.poster %}
+          <img src="{{ movie.poster }}">
+        {% endif %}
       </td>
       <td>
         <b>Directed by:</b> {{ movie.director }}

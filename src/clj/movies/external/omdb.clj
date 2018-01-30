@@ -24,16 +24,18 @@
                       :duration (t/months 3))))
 
 (def key-mapping-pairs
-  (->> [:title, :year, :director, :actors, :country, :language, :plot, :poster]
+  (->> [:director, :actors, :country, :language, :plot, :poster]
        (map (fn [x] [(-> x name str/capitalize keyword), x]))
        (apply list)))
 
 (defn omdb->std [src]
   (if (:Error src)
     {}
-    (->> key-mapping-pairs
-         ; Copy :Title value to :title, :Year value to :year, etc
-         (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {}))))
+    (as-> key-mapping-pairs $
+          ; Copy :Title value to :title, :Year value to :year, etc
+          (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {} $)
+          ; If poster is not available, set value to nil
+          (update $ :poster #(if (= % "N/A") nil %)))))
 
 (defn fetch-movie [title year]
   "Fetch movie metadata, converted to standard format"
