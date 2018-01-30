@@ -5,7 +5,8 @@
             [clojure.java.io :as io]
             [clojure.pprint :as pprint]
             [movies.showings :refer [movie-showings]]
-            [movies.cache :as cache]))
+            [movies.cache :as cache]
+            [movies.util :as util]))
 
 (defn home-page []
   (layout/render "home.html"))
@@ -24,10 +25,7 @@
   (layout/render "cache-list.html" {:items (cache/list-cache)}))
 
 (defn cache-page [id]
-  (let [int-id (Integer/parseInt id)
-        item (cache/get-cache-by-id int-id)
-        content-str (with-out-str (-> item :content pprint/pprint))]
-    (layout/render "cache.html" {:item item :content content-str})))
+  (layout/render "cache.html" {:item (util/get-cache-item id)}))
 
 (defroutes home-routes
   (GET "/" [] (home-page))

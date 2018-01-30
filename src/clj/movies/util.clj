@@ -1,13 +1,15 @@
 (ns movies.util
-  (:require [clojure.data.json :as json]
-            [cheshire.core]))
-            ; [movies.external.core :as external]))
+  (:require [clojure.pprint :as pprint]
+            [clojure.string :as str]
+            [movies.cache :as cache]))
 
 
-; (defn map->file [m path]
-;   (as-> m $
-;     (cheshire.core/generate-string $ {:pretty true})
-;     (spit path $)))
-;
-; (defn write-showings-to-file []
-;   (map->file (external/fetch-movie-showings) "showings.json"))
+(defn get-cache-item [id]
+  "Fetch item from cache and reformat content for HTML rendering"
+  (let [int-id (Integer/parseInt id)
+        item (cache/get-cache-by-id int-id)
+        content-str (with-out-str (-> item :content pprint/pprint))
+        formatted-str (-> content-str
+                          (str/replace "\n" "<br>")
+                          (str/replace #"[ ]{2,}" #(str/replace % " " "&nbsp;")))]
+    (assoc item :content formatted-str)))
