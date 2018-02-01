@@ -19,7 +19,12 @@
   (layout/render "about.html"))
 
 (defn playing-now-page []
-  (layout/render "playing-now.html" {:movies (movie-showings)}))
+  (let [showings (movie-showings)
+        match-count (->> showings
+                         (filter #(< (% :criteria-score) 2))
+                         count)]
+    (layout/render "playing-now.html" {:movies showings
+                                       :match-count match-count})))
 
 (defn cache-list-page []
   (layout/render "cache-list.html" {:items (cache/list-cache)}))
