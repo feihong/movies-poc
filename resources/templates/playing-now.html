@@ -21,7 +21,7 @@
   {% for movie in movies %}
     <tr>
       <td><input type="checkbox"></td>
-      <td>
+      <td {% if movie.matches-criteria %}class="matches"{% endif %}>
         {% if movie.url %}
           <a href="{{ movie.url }}" target="_blank">{{ movie.title }}</a>
         {% else %}

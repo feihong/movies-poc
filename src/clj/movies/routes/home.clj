@@ -21,7 +21,7 @@
 (defn playing-now-page []
   (let [showings (movie-showings)
         match-count (->> showings
-                         (filter #(< (% :criteria-score) 2))
+                         (filter :matches-criteria)
                          count)]
     (layout/render "playing-now.html" {:movies showings
                                        :match-count match-count})))

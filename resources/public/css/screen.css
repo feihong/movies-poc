@@ -32,3 +32,6 @@ body {
   }
 }
 
+td.matches {
+	text-decoration: underline;
+}

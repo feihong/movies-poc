@@ -9,21 +9,22 @@
 (def all-keywords (concat countries languages))
 
 (defn text-contains? [text keywords]
+  "Check if given text contains one of the given keywords"
   (let [lower-text (lower-case text)]
     (some #(includes? lower-text %) keywords)))
 
-(defn assign-score [movie]
+(defn check-criteria-for-movie [movie]
   "Assign a score to the given movie based on how it matches our criteria"
-  (let [score (cond
-                (nil? (movie :country)) 0
-                (nil? (movie :language)) 0
-                (text-contains? (movie :country) countries) 0
-                (text-contains? (movie :language) languages) 0
-                (text-contains? (movie :title) all-keywords) 1
-                (text-contains? (movie :plot) all-keywords) 1
-                :else 2)]
-    (assoc movie :criteria-score score)))
+  (let [matches (cond
+                  (nil? (movie :country)) true
+                  (nil? (movie :language)) true
+                  (text-contains? (movie :country) countries) true
+                  (text-contains? (movie :language) languages) true
+                  (text-contains? (movie :title) all-keywords) true
+                  (text-contains? (movie :plot) all-keywords) true
+                  :else false)]
+    (assoc movie :matches-criteria matches)))
 
-(defn assign-scores [movies]
+(defn check-criteria [movies]
   "Assigns a score to each movie"
-  (map assign-score movies))
+  (map check-criteria-for-movie movies))

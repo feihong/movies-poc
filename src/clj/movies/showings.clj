@@ -24,9 +24,9 @@
 (defn get-runtime [m]
   (some->> (m :runTime)
            (re-matches #"PT(\d+)H(\d+)M")
-           rest
+           rest   ; only get two groups
            (map #(Integer/parseInt %))
-           ((fn [[h m]] (str h "h, " m "m")))))
+           ((fn [[h m]] (str h "h " m "m")))))  ; note extra parens around fn
 
 (defn gracenote->std [m]
   {:title (:title m)
@@ -51,6 +51,6 @@
        (filter :releaseYear)
        (map gracenote->std)
        (map get-additional-meta)
-       criteria/assign-scores
-       ; Sort by score and title ascending
-       (sort-by (juxt :criteria-score :title))))
+       criteria/check-criteria
+       ; Make sure items that match criteria appear first
+       (sort-by (juxt (complement :matches-criteria) :title))))
