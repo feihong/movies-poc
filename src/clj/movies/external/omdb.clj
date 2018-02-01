@@ -24,15 +24,15 @@
                       :duration (t/months 3))))
 
 (def key-mapping-pairs
-  (->> [:director, :actors, :country, :language, :plot, :poster]
-       (map (fn [x] [(-> x name str/capitalize keyword), x]))
-       (apply list)))
-
+  (let [capitalize-keyword #(-> % name str/capitalize keyword)]
+    (->> [:director, :actors, :country, :language, :plot, :poster]
+         (map (juxt capitalize-keyword identity)))))
+         
 (defn omdb->std [src]
   (if (:Error src)
     {}
     (as-> key-mapping-pairs $
-          ; Copy :Title value to :title, :Year value to :year, etc
+          ; Assoc :Director to :director, etc
           (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {} $)
           ; If poster is not available, set value to nil
           (update $ :poster #(if (= % "N/A") nil %)))))

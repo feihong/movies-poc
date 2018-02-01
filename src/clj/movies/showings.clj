@@ -21,6 +21,13 @@
        (group-by #(-> % :theatre :name))
        (map (fn [[k v]] [k (get-datetimes v)]))))
 
+(defn get-runtime [m]
+  (some->> (m :runTime)
+           (re-matches #"PT(\d+)H(\d+)M")
+           rest
+           (map #(Integer/parseInt %))
+           ((fn [[h m]] (str h "h, " m "m")))))
+
 (defn gracenote->std [m]
   {:title (:title m)
    :year (:releaseYear m)
@@ -28,7 +35,8 @@
    :actors (some->> m :topCast (str/join ", "))
    :plot (:longDescription m)
    :url (:officialUrl m)
-   :showtimes (get-showtimes m)})
+   :showtimes (get-showtimes m)
+   :runtime (get-runtime m)})
 
 (defn get-additional-meta [m]
   (let [m2 (omdb/fetch-movie (:title m) (:year m))
@@ -44,5 +52,5 @@
        (map gracenote->std)
        (map get-additional-meta)
        criteria/assign-scores
-       ; Sort by score descending and title ascending
-       (sort-by (fn [x] [(-> x :criteria-score -), (:title x)]))))
+       ; Sort by score and title ascending
+       (sort-by (juxt :criteria-score :title))))

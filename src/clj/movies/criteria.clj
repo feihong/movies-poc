@@ -15,13 +15,13 @@
 (defn assign-score [movie]
   "Assign a score to the given movie based on how it matches our criteria"
   (let [score (cond
-                (nil? (movie :country)) 3
-                (nil? (movie :language)) 3
-                (text-contains? (movie :country) countries) 2
-                (text-contains? (movie :language) languages) 2
+                (nil? (movie :country)) 0
+                (nil? (movie :language)) 0
+                (text-contains? (movie :country) countries) 0
+                (text-contains? (movie :language) languages) 0
                 (text-contains? (movie :title) all-keywords) 1
                 (text-contains? (movie :plot) all-keywords) 1
-                :else 0)]
+                :else 2)]
     (assoc movie :criteria-score score)))
 
 (defn assign-scores [movies]
