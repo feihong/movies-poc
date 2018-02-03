@@ -47,7 +47,7 @@
 
 (defn movie-showings []
   ; (->> (cache/without-caching (gracenote/fetch-movie-showings 3))
-  (->> (gracenote/fetch-movie-showings 3)
+  (->> (gracenote/fetch-movie-showings 0)
        (filter :releaseYear)
        (map gracenote->std)
        (map get-additional-meta)

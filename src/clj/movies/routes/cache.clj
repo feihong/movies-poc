@@ -3,6 +3,7 @@
             [ring.util.http-response :as response]
             [movies.layout :as layout]
             [movies.cache :as cache]
+            [movies.db.core :as db]
             [movies.util :as util]))
 
 
@@ -15,6 +16,7 @@
 (defn cache-delete [id]
   ; (layout/render "cache.html" {:item (util/get-cache-item id)}))
   (let [int-id (Integer/parseInt id)]
+    (db/delete-cache! {:id int-id})
     (response/found "/cache")))
 
 (defn cache-routes []
