@@ -25,6 +25,11 @@ SELECT id, key, created_at, expires_at
 FROM cache
 ORDER BY created_at DESC
 
+-- :name delete-cache! :! :1
+-- :doc Delete item from cache
+DELETE FROM cache
+WHERE id = :id
+
 -- :name get-movies :? :n
 -- :doc Retrieves all movies
 SELECT *

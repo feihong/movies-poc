@@ -4,7 +4,7 @@
             [movies.cache :as cache]))
 
 
-(defn get-cache-item [id]
+(defn get-formatted-cache-item [id]
   "Fetch item from cache and reformat content for HTML rendering"
   (let [int-id (Integer/parseInt id)
         item (cache/get-cache-by-id int-id)
