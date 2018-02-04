@@ -24,8 +24,6 @@
     (layout/render "playing-now.html" {:movies showings
                                        :match-count match-count})))
 
-
-
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/help" [] (help-page))

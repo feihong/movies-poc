@@ -2,6 +2,7 @@
   (:require [compojure.core :refer [routes wrap-routes]]
             [movies.layout :refer [error-page]]
             [movies.routes.home :refer [home-routes]]
+            [movies.routes.services :refer [service-routes]]
             [compojure.route :as route]
             [movies.env :refer [defaults]]
             [mount.core :as mount]
@@ -18,6 +19,7 @@
       (-> #'home-routes
           (wrap-routes middleware/wrap-csrf)
           (wrap-routes middleware/wrap-formats))
+      #'service-routes
       (route/not-found
         (:body
           (error-page {:status 404
