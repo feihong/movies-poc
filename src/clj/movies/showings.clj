@@ -35,7 +35,7 @@
    :actors (some->> m :topCast (str/join ", "))
    :plot (:longDescription m)
    :url (:officialUrl m)
-   :showtimes (get-showtimes m)
+   ; :showtimes (get-showtimes m)
    :runtime (get-runtime m)})
 
 (defn get-additional-meta [m]

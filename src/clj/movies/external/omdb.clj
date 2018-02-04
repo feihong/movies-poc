@@ -27,15 +27,20 @@
   (let [capitalize-keyword #(-> % name str/capitalize keyword)]
     (->> [:director, :actors, :country, :language, :plot, :poster]
          (map (juxt capitalize-keyword identity)))))
-         
+
+(defn check-poster [m]
+  "Delete the :poster value if it isn't a valid URL"
+  (if (str/starts-with? (:poster m) "https://")
+    m
+    (dissoc m :poster)))
+
 (defn omdb->std [src]
   (if (:Error src)
     {}
-    (as-> key-mapping-pairs $
-          ; Assoc :Director to :director, etc
-          (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {} $)
-          ; If poster is not available, set value to nil
-          (update $ :poster #(if (= % "N/A") nil %)))))
+    (->> key-mapping-pairs
+         ; Assoc :Director to :director, etc
+         (reduce (fn [acc [k1 k2]] (assoc acc k2 (src k1))) {})
+         check-poster)))
 
 (defn fetch-movie [title year]
   "Fetch movie metadata, converted to standard format"
