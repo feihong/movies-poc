@@ -10,13 +10,15 @@
 
 (defn get-datetimes [showtimes]
   "Convert showtimes from maps to datetime objects"
-  (->> showtimes
-       (map #(->> %
-                  :dateTime
-                  (f/parse (f/formatters :date-hour-minute))))))
+  (map #(->> %
+             :dateTime
+             (f/parse (f/formatters :date-hour-minute)))
+       showtimes))
 
 (defn get-showtimes [m]
-  "Get showtimes grouped by theater name"
+  "Given sequence of showtime maps, transform to sequence of pairs:
+
+  [theater name, sequence of datetimes] "
   (->> (m :showtimes)
        (group-by #(-> % :theatre :name))
        (map (fn [[k v]] [k (get-datetimes v)]))))
@@ -35,8 +37,8 @@
    :actors (some->> m :topCast (str/join ", "))
    :plot (:longDescription m)
    :url (:officialUrl m)
-   ; :showtimes (get-showtimes m)
-   :runtime (get-runtime m)})
+   :runtime (get-runtime m)
+   :showtimes (get-showtimes m)})
 
 (defn get-additional-meta [m]
   (let [m2 (omdb/fetch-movie (:title m) (:year m))
@@ -47,7 +49,7 @@
 
 (defn movie-showings []
   ; (->> (cache/without-caching (gracenote/fetch-movie-showings 3))
-  (->> (gracenote/fetch-movie-showings 0)
+  (->> (gracenote/fetch-movie-showings 2)
        (filter :releaseYear)
        (map gracenote->std)
        (map get-additional-meta)
